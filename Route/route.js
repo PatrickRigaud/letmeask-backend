@@ -1,16 +1,10 @@
 const express = require('express');
 const route = express();
-const {getAsks, getAsksJavascript} = require('../Data/askData')
+const { todasPerguntas, todasSalas } = require('../Controladores/controladores')
 
 
-route.get('/ask', async function (req, res) {
-	const asks = await getAsks();
-	res.json(asks);
-})
+route.get('/ask', todasPerguntas)
+route.get('/salas', todasSalas)
 
-route.get('/ask/javascript', async function (req, res) {
-	const asks = await getAsksJavascript();
-	res.json(asks);
-})
 
 module.exports = route
