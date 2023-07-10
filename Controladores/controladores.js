@@ -1,5 +1,5 @@
 const {getAsks, getSalas, postPergunta} = require('../Data/askData');
-const {receberReqPostPergunta} = require('./intermediario')
+const {receberReqPostPergunta} = require('./auxiliarControlador')
 
 
  const todasPerguntas =  async (req, res) => {
