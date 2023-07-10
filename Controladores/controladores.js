@@ -1,4 +1,5 @@
-const {getAsks, getSalas} = require('../Data/askData');
+const {getAsks, getSalas, postPergunta} = require('../Data/askData');
+const {receberReqPostPergunta} = require('./intermediario')
 
 
  const todasPerguntas =  async (req, res) => {
@@ -11,7 +12,14 @@ const todasSalas = async (req, res) => {
     res.json(salas);
 }
 
+const criarPerguntaPost = async (req, res) => {
+    const [descricao, usuario, id_sala] = receberReqPostPergunta(req)
+    await postPergunta(descricao, usuario, id_sala)
+    res.json({message: `Mensagem: ${descricao}, usuario: ${usuario}, id_sala ${id_sala}`})
+}
+
 module.exports = {
     todasPerguntas,
-    todasSalas
+    todasSalas,
+    criarPerguntaPost
 };

@@ -2,13 +2,17 @@
 
 const database = require('../Infra/database')
 
-
-const getAsks = function () {
+const getAsks =  () => {
 	return database.query('select * from perguntas')}
 	
-const getSalas = function () {
+const getSalas = () => {
 	return database.query('select * from salas')}
 
+const postPergunta = (descricao, usuario, id_sala) => {
+
+	return database.query(`INSERT INTO perguntas (descricao, usuario, id_sala) values ('${descricao}', '${usuario}', ${id_sala});`)
+}
+
 module.exports = {
-	getAsks, getSalas
+	getAsks, getSalas, postPergunta
 }
