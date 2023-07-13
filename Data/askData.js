@@ -13,6 +13,9 @@ const postPergunta = (descricao, usuario, id_sala) => {
 	return database.query(`INSERT INTO perguntas (descricao, usuario, id_sala) values ('${descricao}', '${usuario}', ${id_sala});`)
 }
 
+const getPerguntasSala = (id_sala_front) => {
+	return database.query(`select * from perguntas where id_sala = ${id_sala_front}`)}
+
 module.exports = {
-	getAsks, getSalas, postPergunta
+	getAsks, getSalas, postPergunta, getPerguntasSala
 }
