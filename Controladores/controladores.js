@@ -1,4 +1,4 @@
-const {getAsks, getSalas, postPergunta, getPerguntasSala} = require('../Data/askData');
+const {getAsks, getSalas, postPergunta, getPerguntasSala, deletePergunta} = require('../Data/askData');
 const {receberReqPostPergunta} = require('./auxiliarControlador')
 
 
@@ -25,9 +25,16 @@ const mapearPerguntasId = async (req, res) => {
     res.json(perguntasID)
 }
 
+const deletarPerguntaId = async (req, res) => {
+    const {id_sala, id} = req.body;
+    await deletePergunta(id_sala, id)
+    res.json({message: 'Deletado'})
+}
+
 module.exports = {
     todasPerguntas,
     todasSalas,
     criarPerguntaPost,
-    mapearPerguntasId
+    mapearPerguntasId,
+    deletarPerguntaId
 };

@@ -16,6 +16,10 @@ const postPergunta = (descricao, usuario, id_sala) => {
 const getPerguntasSala = (id_sala_front) => {
 	return database.query(`select * from perguntas where id_sala = ${id_sala_front}`)}
 
+const deletePergunta = (id_sala, id) => {
+	return database.query(`DELETE from perguntas where id = ${id} and id_sala = ${id_sala}`)
+}
+
 module.exports = {
-	getAsks, getSalas, postPergunta, getPerguntasSala
+	getAsks, getSalas, postPergunta, getPerguntasSala, deletePergunta
 }
