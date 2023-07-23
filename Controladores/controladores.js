@@ -1,5 +1,5 @@
-const {getAsks, getSalas, postPergunta, getPerguntasSala, deletePergunta, getAsk, getComentarios, postComentario} = require('../Data/askData');
-
+const {getAsks, getSalas, postPergunta, getPerguntasSala, deletePergunta, getAsk, getComentarios, postComentario, postUsuario} = require('../Data/askData');
+const bcrypt = require('bcrypt')
 
 
  const todasPerguntas =  async (req, res) => {
@@ -49,6 +49,15 @@ const deletarPerguntaId = async (req, res) => {
     res.json({message: 'Deletado'})
 }
 
+const cadastrarUsuario = async (req, res) => {
+    const {nome, sobrenome, email, senha} = req.body;
+    const senhaEncriptada = await bcrypt.hash(senha, 10) // biblioteca que encriptografa
+
+
+    await postUsuario(nome, sobrenome, email, senhaEncriptada)
+    res.json({fechar: true})
+}
+
 module.exports = {
     todasPerguntas,
     todasSalas,
@@ -57,5 +66,6 @@ module.exports = {
     deletarPerguntaId,
     unicaPergunta,
     buscarComentarios,
-    criarComentarioPost
+    criarComentarioPost,
+    cadastrarUsuario
 };
