@@ -1,4 +1,4 @@
-const {getAsks, getSalas, postPergunta, getPerguntasSala, deletePergunta, getAsk, getComentarios, postComentario, postUsuario} = require('../Data/askData');
+const {getAsks, getSalas, postPergunta, getPerguntasSala, deletePergunta, getAsk, getComentarios, postComentario, postUsuario, buscarEmailSenha} = require('../Data/askData');
 const bcrypt = require('bcrypt')
 
 
@@ -58,6 +58,17 @@ const cadastrarUsuario = async (req, res) => {
     res.json({fechar: true})
 }
 
+const validarEmailSenha = async (req, res) => {
+    const {email, senha} = req.body;
+
+    const emailSenha = await buscarEmailSenha(email)
+    if(emailSenha.length > 0){
+    const senhaValida = await bcrypt.compare(senha, emailSenha[0].senha)
+    res.json({login: senhaValida})
+}
+    
+}
+
 module.exports = {
     todasPerguntas,
     todasSalas,
@@ -67,5 +78,6 @@ module.exports = {
     unicaPergunta,
     buscarComentarios,
     criarComentarioPost,
-    cadastrarUsuario
+    cadastrarUsuario,
+    validarEmailSenha
 };

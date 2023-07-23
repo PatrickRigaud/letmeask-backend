@@ -36,8 +36,12 @@ const postUsuario = (nome, sobrenome, email, senha) => {
 
 const procurarEmail = (email) => {
 	return database.query(`select email from usuarios where email = $1`, [email])
-} 
+}
+
+const buscarEmailSenha = (email) => {
+	return database.query(`select email, senha from usuarios where email = $1`, [email])
+}
 
 module.exports = {
-	getAsks, getSalas, postPergunta, getPerguntasSala, deletePergunta, getAsk, getComentarios, postComentario, postUsuario, procurarEmail
+	getAsks, getSalas, postPergunta, getPerguntasSala, deletePergunta, getAsk, getComentarios, postComentario, postUsuario, procurarEmail, buscarEmailSenha
 }
