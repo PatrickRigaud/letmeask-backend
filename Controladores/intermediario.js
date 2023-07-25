@@ -17,7 +17,15 @@ const validarEmail = async (req, res, next) => {
 }
 
 
+const validarToken = async (req, res, next) => {
+    const {Authorization} = req.headers
+
+    console.log(Authorization )
+    next()
+}
+
 
 module.exports = {
-    validarEmail
+    validarEmail,
+    validarToken
 }

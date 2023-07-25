@@ -1,5 +1,7 @@
 const {getAsks, getSalas, postPergunta, getPerguntasSala, deletePergunta, getAsk, getComentarios, postComentario, postUsuario, buscarEmailSenha} = require('../Data/askData');
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
+const senhaJwt = require('./senhaJwt')
 
 
  const todasPerguntas =  async (req, res) => {
@@ -60,12 +62,18 @@ const cadastrarUsuario = async (req, res) => {
 
 const validarEmailSenha = async (req, res) => {
     const {email, senha} = req.body;
-
+    if(!email || !senha){
+        return res.json({login: false})
+    }
     const emailSenha = await buscarEmailSenha(email)
+
     if(emailSenha.length > 0){
     const senhaValida = await bcrypt.compare(senha, emailSenha[0].senha)
-    res.json({login: senhaValida})
+    const token = jwt.sign({email: emailSenha[0].email}, senhaJwt, {expiresIn: '1h'})
+   
+    return res.json({login: senhaValida, token})
 }
+return res.json({login: false})
     
 }
 
