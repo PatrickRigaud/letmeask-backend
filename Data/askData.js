@@ -39,7 +39,7 @@ const procurarEmail = (email) => {
 }
 
 const buscarEmailSenha = (email) => {
-	return database.query(`select email, senha from usuarios where email = $1`, [email])
+	return database.query(`select * from usuarios where email = $1`, [email])
 }
 
 module.exports = {

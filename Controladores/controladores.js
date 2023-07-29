@@ -70,8 +70,9 @@ const validarEmailSenha = async (req, res) => {
     if(emailSenha.length > 0){
     const senhaValida = await bcrypt.compare(senha, emailSenha[0].senha)
     const token = jwt.sign({email: emailSenha[0].email}, senhaJwt, {expiresIn: '1h'})
+    
    
-    return res.json({login: senhaValida, token})
+    return res.json({login: senhaValida, token, nome: emailSenha[0].nome, sobrenome: emailSenha[0].sobrenome})
 }
 return res.json({login: false})
     

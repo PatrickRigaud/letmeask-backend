@@ -1,5 +1,7 @@
 const database = require('../Infra/database')
 const { procurarEmail} = require('../Data/askData')
+const jwt = require('jsonwebtoken')
+const senhaJwt = require('./senhaJwt')
 
 const validarEmail = async (req, res, next) => {
     const {email} = req.body
@@ -18,9 +20,24 @@ const validarEmail = async (req, res, next) => {
 
 
 const validarToken = async (req, res, next) => {
-    const {Authorization} = req.headers
+    const {authorization} = req.headers
 
-    console.log(Authorization )
+    if (authorization) {
+        const tokenLimpo = authorization.split(' ')[1];
+        jwt.verify(tokenLimpo, senhaJwt, (err, decoded) => {
+            if (err) {
+                console.error('Erro ao verificar JWT:', err.message);
+                return res.status(401).json({message: 'Token expirado ou invalido',
+                                            token: false})
+              } else {
+                // O JWT é válido, e seu conteúdo está disponível no objeto 'decoded'
+              
+              }
+        })
+      }
+
+  
+    
     next()
 }
 
